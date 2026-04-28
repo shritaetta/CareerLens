@@ -1,0 +1,212 @@
+/* Moved dashboard-layout and dashboard-container to index.css for global route availability */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+/* Profile Summary Section */
+.profile-summary-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.summary-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.summary-header h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary-color);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.edit-button:hover {
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+}
+
+.summary-group {
+  margin-bottom: 1.5rem;
+}
+
+.summary-group:last-child {
+  margin-bottom: 0;
+}
+
+.summary-group h3 {
+  font-size: 0.875rem;
+  color: #89cff0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.summary-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.summary-text {
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+/* Action Buttons Section */
+.actions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.action-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.action-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.action-card:hover::before {
+  opacity: 1;
+}
+
+.action-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: rgba(99, 102, 241, 0.15);
+  border-radius: 16px;
+  color: #818cf8;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.action-card:hover .action-icon-wrapper {
+  background: var(--primary-color);
+  color: white;
+  transform: scale(1.1) rotate(5deg);
+}
+
+.action-details h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.action-details p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.action-arrow {
+  margin-left: auto;
+  color: var(--text-secondary);
+  transition: all 0.3s;
+}
+
+.action-card:hover .action-arrow {
+  color: var(--primary-color);
+  transform: translateX(5px);
+}
+
+/* Toast Message */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toast {
+  background: rgba(15, 23, 42, 0.95);
+  color: var(--text-primary);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-color);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
