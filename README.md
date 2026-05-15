@@ -85,7 +85,7 @@ An AI-powered internship recommendation and career tools platform that helps stu
 
 ```bash
 cd backend
-pip install fastapi uvicorn sentence-transformers scikit-learn pandas numpy PyPDF2 openpyxl python-multipart
+pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
