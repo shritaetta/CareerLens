@@ -161,8 +161,4 @@ The `ResumeEnhancer` class runs entirely offline (no external API calls) and per
 - User sessions are managed via `localStorage` (`user_id` key) on the frontend — no JWT or cookie-based auth.
 - The feedback constraint store is in-memory and resets on server restart. For production use, persist `feedback_store` to the database.
 
----
 
-## License
-
-MIT
