@@ -265,6 +265,4 @@ The `ResumeEnhancer` class runs entirely offline (no external API calls) and per
 
 <div align="center">
 
-Made with ❤️ for students navigating the internship search
-
 </div>
