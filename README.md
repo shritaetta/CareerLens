@@ -13,7 +13,6 @@ Find your best-fit internships, build ATS-optimized resumes, and evaluate your a
 [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Sentence--Transformers](https://img.shields.io/badge/Sentence--BERT-all--MiniLM--L6--v2-FFD21E)](https://www.sbert.net/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](#license)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
 
