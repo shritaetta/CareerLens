@@ -49,7 +49,7 @@ CareerLens follows a **decoupled client–server architecture**: a single-page R
 
 ```mermaid
 graph TB
-    subgraph Client["🖥️ Frontend — React 19 + Vite SPA"]
+    subgraph Client["🖥️ Frontend"]
         direction TB
         Router["React Router v7"]
         Pages["Pages<br/>Login · Dashboard · ProfileSetup<br/>Recommendations · ResumeBuilder<br/>ATSEvaluation · Drafts"]
