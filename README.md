@@ -1,21 +1,108 @@
-# CareerLens 🎯
+<div align="center">
 
-An AI-powered internship recommendation and career tools platform that helps students find the best-fit internships, build ATS-optimized resumes, and evaluate their application strength.
+# 🎯 CareerLens
+
+**AI-powered internship recommendation and career tools platform**
+
+Find your best-fit internships, build ATS-optimized resumes, and evaluate your application strength — all in one place.
+
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.135-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Sentence--Transformers](https://img.shields.io/badge/Sentence--BERT-all--MiniLM--L6--v2-FFD21E)](https://www.sbert.net/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](#license)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
+
+</div>
 
 ---
 
-## Features
+## 📖 Overview
 
-- **Smart Recommendations** — Semantic ML-based internship matching using Sentence-BERT embeddings and cosine similarity
-- **Feedback Loop** — Dislike internships with a reason (location, stipend, domain, etc.) and the system adapts future recommendations using learned constraints
-- **Resume Builder** — Auto-generates an ATS-friendly resume from your profile with an inline content-editable preview; supports saving drafts
-- **ATS Evaluation** — Upload a resume PDF and test it against a specific internship's requirements using a hybrid semantic + keyword scoring model
-- **Profile Setup** — Comprehensive profile builder covering education, skills, projects, achievements, preferred domains, and document uploads
-- **Liked Recommendations** — Save interesting internships for later review
+**CareerLens** helps students and early-career candidates navigate the internship search with three core AI-driven tools:
+
+- 🔍 **Semantic internship matching** powered by Sentence-BERT embeddings
+- 📄 **ATS-friendly resume generation** with an inline, editable live preview
+- ✅ **ATS compatibility scoring** against real job requirements
+
+The system also **learns from user feedback** — every "dislike" reason (bad location, low stipend, wrong domain, etc.) refines future recommendations in real time.
 
 ---
 
-## Tech Stack
+## ✨ Features
+
+| Feature | Description |
+|---|---|
+| 🤖 **Smart Recommendations** | Semantic ML-based internship matching using Sentence-BERT embeddings + cosine similarity |
+| 🔁 **Adaptive Feedback Loop** | Dislike an internship with a reason, and the system builds per-user constraints to filter future results |
+| 📝 **Resume Builder** | Auto-generates an ATS-friendly resume from your profile with a click-to-edit live preview and draft saving |
+| 📊 **ATS Evaluation** | Upload a resume PDF and score it against a specific internship using hybrid semantic + keyword scoring |
+| 🧑‍🎓 **Profile Setup** | Full profile builder — education, skills, projects, achievements, preferred domains, and document uploads |
+| ❤️ **Liked Recommendations** | Save internships you're interested in for later review |
+
+---
+
+## 🏗️ Architecture
+
+CareerLens follows a **decoupled client–server architecture**: a single-page React frontend communicates with a modular FastAPI backend over a REST API. The backend itself is cleanly separated by responsibility rather than bundled into one script.
+
+```mermaid
+graph TB
+    subgraph Client["🖥️ Frontend — React 19 + Vite SPA"]
+        direction TB
+        Router["React Router v7"]
+        Pages["Pages<br/>Login · Dashboard · ProfileSetup<br/>Recommendations · ResumeBuilder<br/>ATSEvaluation · Drafts"]
+        Components["Components<br/>Navbar · InternshipCard<br/>ResumeTemplate · FeedbackModal"]
+        LocalStorage[("localStorage<br/>user_id session")]
+        Router --> Pages
+        Pages --> Components
+        Pages -. reads/writes .-> LocalStorage
+    end
+
+    subgraph Server["⚙️ Backend — FastAPI (single process)"]
+        direction TB
+        Main["main.py<br/>REST routes & request handling"]
+
+        subgraph Modules["Internal modules"]
+            direction LR
+            DataLoader["data_loader.py<br/>Sentence-BERT embeddings<br/>cosine similarity<br/>ATS scoring · recommendations"]
+            Enhancer["resume_enhancer.py<br/>Skill categorization<br/>text improvement<br/>summary generation"]
+            DB["database.py<br/>SQLite access layer"]
+        end
+
+        FeedbackStore[("In-memory<br/>feedback_store<br/>(per-user constraints)")]
+        Uploads[("/uploads<br/>static file storage")]
+
+        Main --> DataLoader
+        Main --> Enhancer
+        Main --> DB
+        Main --> FeedbackStore
+        Main --> Uploads
+        Enhancer -. uses model from .-> DataLoader
+    end
+
+    subgraph Persistence["💾 Data"]
+        SQLite[("users.db<br/>SQLite<br/>users + profiles")]
+        Dataset[("Book2.xlsx<br/>internship dataset")]
+    end
+
+    Client <-->|"REST / JSON<br/>http://localhost:8000"| Main
+    DB <--> SQLite
+    DataLoader -. loads at startup .-> Dataset
+
+    style Client fill:#1e1b4b,stroke:#818cf8,color:#f8fafc
+    style Server fill:#0f172a,stroke:#6366f1,color:#f8fafc
+    style Modules fill:#1e293b,stroke:#4f46e5,color:#f8fafc
+    style Persistence fill:#0f172a,stroke:#94a3b8,color:#f8fafc
+```
+
+> **Note:** This is a single FastAPI service with clearly separated internal modules (routing, ML/data logic, resume enhancement, persistence) — not a distributed microservices system. Each module could be extracted into its own independently deployable service in the future (e.g. a standalone recommendation service or resume-enhancement service), but today they run in one process against one SQLite database.
+
+---
+
+## 🛠️ Tech Stack
 
 ### Frontend
 | Technology | Purpose |
@@ -37,7 +124,7 @@ An AI-powered internship recommendation and career tools platform that helps stu
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 ├── frontend/
@@ -73,7 +160,7 @@ An AI-powered internship recommendation and career tools platform that helps stu
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -93,7 +180,7 @@ python -m venv venv
 # On Windows:
 venv\Scripts\activate
 # On macOS/Linux:
-# source venv/bin/activate
+source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -102,7 +189,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
-> **Note:** Update the `file_path` in `backend/data_loader.py` to point to your local `Book2.xlsx` internship dataset.
+> **Note:** Update the `file_path` in `backend/data_loader.py` to point to your local internship dataset (`Book2.xlsx`).
 
 ### Frontend Setup
 
@@ -112,11 +199,11 @@ npm install
 npm run dev
 ```
 
-The frontend will be available at `http://localhost:5173`.
+The frontend will be available at **http://localhost:5173**, and the API at **http://localhost:8000**.
 
 ---
 
-## API Reference
+## 📡 API Reference
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -134,7 +221,7 @@ The frontend will be available at `http://localhost:5173`.
 
 ---
 
-## How the Recommendation Engine Works
+## 🧠 How the Recommendation Engine Works
 
 1. The user's skills, education, achievements, resume text, and certificates are combined into a single unified profile string.
 2. This string is encoded into a dense vector using Sentence-BERT (`all-MiniLM-L6-v2`).
@@ -144,7 +231,7 @@ The frontend will be available at `http://localhost:5173`.
 
 ---
 
-## How the ATS Scorer Works
+## ✅ How the ATS Scorer Works
 
 The ATS score is a weighted hybrid of two signals:
 
@@ -157,7 +244,7 @@ Final Score = ((semantic_similarity × 0.6) + (keyword_match_rate × 0.4)) × 10
 
 ---
 
-## Resume Enhancement Pipeline
+## 🪄 Resume Enhancement Pipeline
 
 The `ResumeEnhancer` class runs entirely offline (no external API calls) and performs:
 
@@ -168,10 +255,17 @@ The `ResumeEnhancer` class runs entirely offline (no external API calls) and per
 
 ---
 
-## Environment Notes
+## ⚠️ Environment Notes
 
 - The backend serves uploaded files as static assets from the `/uploads` directory on `http://localhost:8000/uploads/`.
 - User sessions are managed via `localStorage` (`user_id` key) on the frontend — no JWT or cookie-based auth.
 - The feedback constraint store is in-memory and resets on server restart. For production use, persist `feedback_store` to the database.
 
 
+---
+
+<div align="center">
+
+Made with ❤️ for students navigating the internship search
+
+</div>
